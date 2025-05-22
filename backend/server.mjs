@@ -6,7 +6,7 @@ const UPLOADLOG = 'upload-log.json';
 import { JSONFilePreset } from 'lowdb/node';
 import { recoverPersonalSignature } from '@metamask/eth-sig-util';
 import { bufferToHex } from 'ethereumjs-util';
-import { create } from 'ipfs-http-client';
+import {create} from "ipfs-http-client";
 
 const db = await JSONFilePreset('wallet-logins.json', { logins: [] });
 

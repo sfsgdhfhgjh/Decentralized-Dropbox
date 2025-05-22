@@ -5,7 +5,7 @@ export default function AdminDashboard() {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:4000/api/uploads")
+    fetch("http://15.206.117.184:4000/api/uploads")
       .then(r => r.json())
       .then(data => setUploads(data));
   }, []);

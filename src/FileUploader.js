@@ -36,7 +36,7 @@ export default function FileUploader() {
       formData.append("signature", signature);
 
       setStatus("Uploading…");
-      const res = await fetch("http://localhost:4000/api/upload", {
+      const res = await fetch("http://15.206.117.184:4000/api/upload", {
         method: "POST",
         body: formData,
       });

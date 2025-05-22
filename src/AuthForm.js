@@ -44,7 +44,7 @@ const AuthForm = () => {
     }
     // Send to backend
     try {
-      const result = await fetch("http://localhost:4000/api/auth", {
+      const result = await fetch("http://15.206.117.184:4000/api/auth", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
