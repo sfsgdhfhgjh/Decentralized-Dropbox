@@ -18,7 +18,7 @@ app.use(cors({
     'http://localhost:3000',
     'https://decentralized-dropbox-plum.vercel.app',
     'https://decentralized-dropbox-git-main-aasthas-projects-456487e7.vercel.app',
-    'https://69a3-2406-da1a-4c4-9b00-7e74-571-a8a3-3475.ngrok-free.app'
+    'https://3ee2-2406-da1a-4c4-9b00-7e74-571-a8a3-3475.ngrok-free.app'
   ],
   credentials: true
 }));

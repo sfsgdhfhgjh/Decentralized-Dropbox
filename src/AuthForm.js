@@ -44,7 +44,7 @@ const AuthForm = () => {
     }
     // Send to backend
     try {
-      const result = await fetch("https://69a3-2406-da1a-4c4-9b00-7e74-571-a8a3-3475.ngrok-free.app", {
+      const result = await fetch("https://3ee2-2406-da1a-4c4-9b00-7e74-571-a8a3-3475.ngrok-free.app", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
