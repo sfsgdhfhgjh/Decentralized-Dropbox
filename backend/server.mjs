@@ -13,7 +13,7 @@ const db = await JSONFilePreset('wallet-logins.json', { logins: [] });
 const app = express();
 
 // ===== CORRECT CORS CONFIGURATION (put this BEFORE any routes) =====
-pp.use(cors({
+app.use(cors({
   origin: [
     'http://localhost:3000',
     'https://decentralized-dropbox-plum.vercel.app',
