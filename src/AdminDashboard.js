@@ -5,7 +5,7 @@ export default function AdminDashboard() {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    fetch("https://34f5-2406-da1a-4c4-9b00-7e74-571-a8a3-3475.ngrok-free.app")
+    fetch("https://69a3-2406-da1a-4c4-9b00-7e74-571-a8a3-3475.ngrok-free.app")
       .then(r => r.json())
       .then(data => setUploads(data));
   }, []);

@@ -17,7 +17,7 @@ app.use(cors({
   origin: [
     'http://localhost:3000', // Local react dev
     'https://decentralized-dropbox-plum.vercel.app', // Vercel deployed app
-    'https://29f0-2406-da1a-4c4-9b00-7e74-571-a8a3-3475.ngrok-free.app' // <- your current ngrok HTTPS URL
+    'https://69a3-2406-da1a-4c4-9b00-7e74-571-a8a3-3475.ngrok-free.app' // <- your current ngrok HTTPS URL
   ],
   credentials: true
 }));
