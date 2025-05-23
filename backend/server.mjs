@@ -13,14 +13,16 @@ const db = await JSONFilePreset('wallet-logins.json', { logins: [] });
 const app = express();
 
 // ===== CORRECT CORS CONFIGURATION (put this BEFORE any routes) =====
-app.use(cors({
+pp.use(cors({
   origin: [
-    'http://localhost:3000', // Local react dev
-    'https://decentralized-dropbox-plum.vercel.app', // Vercel deployed app
-    'https://69a3-2406-da1a-4c4-9b00-7e74-571-a8a3-3475.ngrok-free.app' // <- your current ngrok HTTPS URL
+    'http://localhost:3000',
+    'https://decentralized-dropbox-plum.vercel.app',
+    'https://decentralized-dropbox-git-main-aasthas-projects-456487e7.vercel.app',
+    'https://69a3-2406-da1a-4c4-9b00-7e74-571-a8a3-3475.ngrok-free.app'
   ],
   credentials: true
 }));
+
 app.use(express.json());
 // ================================================================
 
