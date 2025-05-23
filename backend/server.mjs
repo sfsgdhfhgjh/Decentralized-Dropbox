@@ -23,6 +23,16 @@ const ipfs = create({ url: 'http://localhost:5001' });
 /**
  * Wallet login logging
  */
+
+app.use(cors({
+  origin: [
+    'http://localhost:4000',
+    'https://29f0-2406-da1a-4c4-9b00-7e74-571-a8a3-3475.ngrok-free.app -> http://localhost:4000'
+    
+  ],
+  credentials: true
+}));
+
 app.post('/api/login', async (req, res) => {
   const { address } = req.body;
   if (!address) {
