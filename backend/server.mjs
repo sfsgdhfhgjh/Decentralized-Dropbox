@@ -16,9 +16,8 @@ const app = express();
 app.use(cors({
   origin: [
     'http://localhost:3000',
-    'https://decentralized-dropbox-plum.vercel.app',
-    'https://decentralized-dropbox-git-main-aasthas-projects-456487e7.vercel.app',
-    'https://3ee2-2406-da1a-4c4-9b00-7e74-571-a8a3-3475.ngrok-free.app'
+    'https://decentralized-dropbox-plum.vercel.app'
+    // Add 'https://your-railway-app.up.railway.app' once you deploy!
   ],
   credentials: true
 }));
@@ -122,8 +121,7 @@ app.get('/api/uploads', (req, res) => {
   res.json(allUploads);
 });
 
-const PORT = 4000;
+const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log(`✅ Backend running on http://localhost:${PORT}`);
 });
-
