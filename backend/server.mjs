@@ -6,33 +6,33 @@ const UPLOADLOG = 'upload-log.json';
 import { JSONFilePreset } from 'lowdb/node';
 import { recoverPersonalSignature } from '@metamask/eth-sig-util';
 import { bufferToHex } from 'ethereumjs-util';
-import {create} from "ipfs-http-client";
+import { create } from "ipfs-http-client";
 
 const db = await JSONFilePreset('wallet-logins.json', { logins: [] });
 
 const app = express();
-app.use(cors());
-app.use(express.json());
 
-// Setup multer to save files in /uploads
-const upload = multer({ dest: 'uploads/' });
-
-// Create IPFS client
-const ipfs = create({ url: 'http://localhost:5001' });
-
-/**
- * Wallet login logging
- */
-
+// ===== CORRECT CORS CONFIGURATION (put this BEFORE any routes) =====
 app.use(cors({
   origin: [
-    'http://localhost:4000',
-    'https://29f0-2406-da1a-4c4-9b00-7e74-571-a8a3-3475.ngrok-free.app -> http://localhost:4000'
-    
+    'http://localhost:3000', // Local react dev
+    'https://decentralized-dropbox-plum.vercel.app', // Vercel deployed app
+    'https://29f0-2406-da1a-4c4-9b00-7e74-571-a8a3-3475.ngrok-free.app' // <- your current ngrok HTTPS URL
   ],
   credentials: true
 }));
+app.use(express.json());
+// ================================================================
 
+// Multer for file uploads
+const upload = multer({ dest: 'uploads/' });
+
+// IPFS
+const ipfs = create({ url: 'http://localhost:5001' });
+
+// --- ROUTES ---
+
+// Wallet login logging
 app.post('/api/login', async (req, res) => {
   const { address } = req.body;
   if (!address) {
@@ -48,17 +48,13 @@ app.post('/api/login', async (req, res) => {
   res.json({ success: true });
 });
 
-/**
- * Admin view of login records
- */
+// Admin view of login records
 app.get('/api/logins', async (_req, res) => {
   await db.read();
   res.json(db.data.logins);
 });
 
-/**
- * Upload with MetaMask signature verification + IPFS storage + upload log
- */
+// Upload with MetaMask signature verification + IPFS storage + upload log
 app.post('/api/upload', upload.single('file'), async (req, res) => {
   const { address, signature, message } = req.body;
 
@@ -115,9 +111,7 @@ app.post('/api/upload', upload.single('file'), async (req, res) => {
   }
 });
 
-/**
- * Return all uploads (filename, cid, address, date) for admin/frontend usage
- */
+// Return all uploads for admin/frontend usage
 app.get('/api/uploads', (req, res) => {
   if (!fs.existsSync(UPLOADLOG)) {
     return res.json([]);
@@ -130,3 +124,4 @@ const PORT = 4000;
 app.listen(PORT, () => {
   console.log(`✅ Backend running on http://localhost:${PORT}`);
 });
+
