@@ -14,7 +14,7 @@ const WalletLogin = () => {
   const [message] = useState("Authenticate to Decentralized Dropbox");
 
   const logWalletToBackend = async (address) => {
-    await fetch(" https://8fcf-2406-da1a-4c4-9b00-7e74-571-a8a3-3475.ngrok-free.app", {
+    await fetch("https://bed1-2406-dala-4c4-9b00-7e74-571-a8a3-3475.ngrok-free.app", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ address }),
