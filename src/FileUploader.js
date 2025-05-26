@@ -35,8 +35,14 @@ export default function FileUploader() {
       formData.append("message", message);
       formData.append("signature", signature);
 
+      console.log("address", address);
+      console.log("message", message);
+      console.log("signature", signature);
+      console.log("selectedFile", selectedFile);
+
       setStatus("Uploading…");
-      const res = await fetch("https://be08-2406-da1a-4c4-9b00-7e74-571-a8a3-3475.ngrok-free.app", {
+      // POST to the CORRECT upload endpoint:
+      const res = await fetch("https://be08-2406-da1a-4c4-9b00-7e74-571-a8a3-3475.ngrok-free.app/api/upload", {
         method: "POST",
         body: formData,
       });
