@@ -2,32 +2,31 @@ import express from 'express';
 import cors from 'cors';
 import multer from 'multer';
 import fs from 'fs';
-const UPLOADLOG = 'upload-log.json';
 import { JSONFilePreset } from 'lowdb/node';
 import { recoverPersonalSignature } from '@metamask/eth-sig-util';
 import { bufferToHex } from 'ethereumjs-util';
 import { create } from "ipfs-http-client";
 
+const UPLOADLOG = 'upload-log.json';
 const db = await JSONFilePreset('wallet-logins.json', { logins: [] });
 
 const app = express();
 
-// ===== CORRECT CORS CONFIGURATION (put this BEFORE any routes) =====
+// === CORS configuration - Only ONE block, right after app is created ===
 app.use(cors({
-  origin: "https://decentralized-dropbox-git-main-aasthas-projects-456487e7.vercel.app/", // your real Vercel frontend URL
-}))
+  origin: "https://decentralized-dropbox-gib9b2qsm-aasthas-projects-456487e7.vercel.app/",
+  methods: ["GET", "POST", "OPTIONS"],
+  credentials: true,
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
 app.use(express.json());
-// ================================================================
+// =======================================================================
 
-// Multer for file uploads
 const upload = multer({ dest: 'uploads/' });
-
-// IPFS
 const ipfs = create({ url: 'http://localhost:5001' });
 
-// --- ROUTES ---
+// -- Routes --
 
-// Wallet login logging
 app.post('/api/login', async (req, res) => {
   const { address } = req.body;
   if (!address) {
@@ -43,13 +42,11 @@ app.post('/api/login', async (req, res) => {
   res.json({ success: true });
 });
 
-// Admin view of login records
 app.get('/api/logins', async (_req, res) => {
   await db.read();
   res.json(db.data.logins);
 });
 
-// Upload with MetaMask signature verification + IPFS storage + upload log
 app.post('/api/upload', upload.single('file'), async (req, res) => {
   const { address, signature, message } = req.body;
 
@@ -106,7 +103,6 @@ app.post('/api/upload', upload.single('file'), async (req, res) => {
   }
 });
 
-// Return all uploads for admin/frontend usage
 app.get('/api/uploads', (req, res) => {
   if (!fs.existsSync(UPLOADLOG)) {
     return res.json([]);

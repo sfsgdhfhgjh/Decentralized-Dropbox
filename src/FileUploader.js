@@ -36,7 +36,7 @@ export default function FileUploader() {
       formData.append("signature", signature);
 
       setStatus("Uploading…");
-      const res = await fetch("https://c4a4-2406-da1a-4c4-9b00-7e74-571-a8a3-3475.ngrok-free.app", {
+      const res = await fetch(" https://8fcf-2406-da1a-4c4-9b00-7e74-571-a8a3-3475.ngrok-free.app", {
         method: "POST",
         body: formData,
       });
