@@ -12,15 +12,17 @@ const db = await JSONFilePreset('wallet-logins.json', { logins: [] });
 
 const app = express();
 
-// === CORS configuration - Only ONE block, right after app is created ===
+// CORRECT CORS CONFIGURATION – only one block, no trailing slash on the Vercel URL
 app.use(cors({
-  origin: "https://decentralized-dropbox-gib9b2qsm-aasthas-projects-456487e7.vercel.app/",
+  origin: [
+    "https://decentralized-dropbox-git-main-aasthas-projects-456487e7.vercel.app",
+    "https://decentralized-dropbox-aasthas-projects-456487e7.vercel.app"
+  ],
   methods: ["GET", "POST", "OPTIONS"],
   credentials: true,
   allowedHeaders: ["Content-Type", "Authorization"]
 }));
 app.use(express.json());
-// =======================================================================
 
 const upload = multer({ dest: 'uploads/' });
 const ipfs = create({ url: 'http://localhost:5001' });
