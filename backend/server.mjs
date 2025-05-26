@@ -14,14 +14,8 @@ const app = express();
 
 // ===== CORRECT CORS CONFIGURATION (put this BEFORE any routes) =====
 app.use(cors({
-  origin: [
-    'http://localhost:3000',
-    'https://decentralized-dropbox-plum.vercel.app'
-    // Add 'https://your-railway-app.up.railway.app' once you deploy!
-  ],
-  credentials: true
-}));
-
+  origin: "https://decentralized-dropbox-git-main-aasthas-projects-456487e7.vercel.app/", // your real Vercel frontend URL
+}))
 app.use(express.json());
 // ================================================================
 
