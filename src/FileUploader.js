@@ -23,11 +23,20 @@ export default function FileUploader() {
     try {
       setStatus("Connecting to MetaMask…");
       const [address] = await window.ethereum.request({ method: "eth_requestAccounts" });
+      console.log("address", address);
+
       const message = "Please sign to upload file";
+      alert("MetaMask will now ask you to sign a message.");
       const signature = await window.ethereum.request({
         method: "personal_sign",
         params: [message, address],
       });
+      console.log("signature", signature);
+
+      if (!address || !signature) {
+        setStatus("MetaMask did not return address or signature.");
+        return;
+      }
 
       const formData = new FormData();
       formData.append("file", selectedFile);
@@ -35,14 +44,11 @@ export default function FileUploader() {
       formData.append("message", message);
       formData.append("signature", signature);
 
-      console.log("address", address);
-      console.log("message", message);
-      console.log("signature", signature);
-      console.log("selectedFile", selectedFile);
+      console.log("Uploading file:", selectedFile);
 
       setStatus("Uploading…");
-      // POST to the CORRECT upload endpoint:
-      const res = await fetch("https://be08-2406-da1a-4c4-9b00-7e74-571-a8a3-3475.ngrok-free.app/api/upload", {
+      // POST to the correct upload endpoint:
+      const res = await fetch("http://localhost:4000/api/upload", {
         method: "POST",
         body: formData,
       });
@@ -68,8 +74,8 @@ export default function FileUploader() {
         setIpfsUrl("");
       }
     } catch (err) {
-      console.error(err);
-      setStatus("Upload failed.");
+      console.error("MetaMask or Upload error:", err);
+      setStatus("Upload failed: " + (err && err.message ? err.message : String(err)));
       setIpfsUrl("");
     }
   };
@@ -116,7 +122,6 @@ export default function FileUploader() {
         </div>
       )}
 
-      {/* Clickable link after successful upload */}
       {ipfsUrl && (
         <div style={{
           marginTop: 12,
@@ -129,7 +134,6 @@ export default function FileUploader() {
         </div>
       )}
 
-      {/* Scrollable upload history */}
       {uploadedFiles.length > 0 && (
         <div style={{ marginTop: 24 }}>
           <h4>

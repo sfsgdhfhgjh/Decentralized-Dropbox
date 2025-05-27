@@ -30,21 +30,21 @@ const AuthForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
+    setSuccess("");
     if (!form.username || !form.password || !form.dob || !form.captcha) {
       setError("Please fill out every field.");
-      setSuccess("");
       return;
     }
     if (form.captcha !== captchaQuestion.answer) {
       setError("Captcha is incorrect. Try again.");
       setForm({ ...form, captcha: "" });
       setCaptchaQuestion(generateCaptcha());
-      setSuccess("");
       return;
     }
-    // Send to backend
+
     try {
-      const result = await fetch("https://be08-2406-da1a-4c4-9b00-7e74-571-a8a3-3475.ngrok-free.app", {
+      const result = await fetch("http://localhost:4000/api/uploads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -53,26 +53,27 @@ const AuthForm = () => {
           dob: form.dob
         }),
       });
+
       if (!result.ok) {
         const data = await result.json();
         setError(data.message || "Login failed.");
-        setSuccess("");
         return;
       }
-      setError("");
+
       setSuccess("Authentication successful!");
+      setForm({ username: "", password: "", dob: "", captcha: "" });
+      setCaptchaQuestion(generateCaptcha());
     } catch (err) {
-      setError("Server error.");
-      setSuccess("");
+      setError("Network error or server unreachable.");
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{maxWidth:400,margin:"2rem auto",padding:24,border:"1px solid #ccc",borderRadius:8}}>
+    <form onSubmit={handleSubmit} style={{ maxWidth: 400, margin: "2rem auto", padding: 24, border: "1px solid #ccc", borderRadius: 8 }}>
       <h2>Login</h2>
-      <div style={{marginBottom:10}}>
+      <div style={{ marginBottom: 10 }}>
         <label>
-          Username:<br/>
+          Username:<br />
           <input
             type="text"
             name="username"
@@ -82,9 +83,9 @@ const AuthForm = () => {
           />
         </label>
       </div>
-      <div style={{marginBottom:10}}>
+      <div style={{ marginBottom: 10 }}>
         <label>
-          Password:<br/>
+          Password:<br />
           <input
             type="password"
             name="password"
@@ -93,9 +94,9 @@ const AuthForm = () => {
           />
         </label>
       </div>
-      <div style={{marginBottom:10}}>
+      <div style={{ marginBottom: 10 }}>
         <label>
-          Date of Birth:<br/>
+          Date of Birth:<br />
           <input
             type="date"
             name="dob"
@@ -104,7 +105,7 @@ const AuthForm = () => {
           />
         </label>
       </div>
-      <div style={{marginBottom:10}}>
+      <div style={{ marginBottom: 10 }}>
         <div>
           Captcha: <b>{captchaQuestion.question}</b>
         </div>
@@ -116,8 +117,8 @@ const AuthForm = () => {
         />
       </div>
       <button type="submit">Authenticate</button>
-      {error && <div style={{color:"red",marginTop:10}}>{error}</div>}
-      {success && <div style={{color:"green",marginTop:10}}>{success}</div>}
+      {error && <div style={{ color: "red", marginTop: 10 }}>{error}</div>}
+      {success && <div style={{ color: "green", marginTop: 10 }}>{success}</div>}
     </form>
   );
 };

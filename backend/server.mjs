@@ -1,5 +1,4 @@
 import express from 'express';
-import cors from 'cors';
 import multer from 'multer';
 import fs from 'fs';
 import { JSONFilePreset } from 'lowdb/node';
@@ -12,17 +11,19 @@ const db = await JSONFilePreset('wallet-logins.json', { logins: [] });
 
 const app = express();
 
-// CORRECT CORS CONFIGURATION – only one block, no trailing slash on the Vercel URL
+// === CORS configuration - For LOCAL dev only ===
+import cors from 'cors';
+
+
+
 app.use(cors({
-  origin: [
-    "https://decentralized-dropbox-git-main-aasthas-projects-456487e7.vercel.app",
-    "https://decentralized-dropbox-aasthas-projects-456487e7.vercel.app"
-  ],
+  origin: "http://localhost:3000",
   methods: ["GET", "POST", "OPTIONS"],
-  credentials: true,
-  allowedHeaders: ["Content-Type", "Authorization"]
+  allowedHeaders: ["Content-Type", "Authorization"],
 }));
+
 app.use(express.json());
+
 
 const upload = multer({ dest: 'uploads/' });
 const ipfs = create({ url: 'http://localhost:5001' });
@@ -117,3 +118,5 @@ const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log(`✅ Backend running on http://localhost:${PORT}`);
 });
+
+

@@ -13,13 +13,13 @@ const WalletLogin = () => {
   const [signature, setSignature] = useState("");
   const [message] = useState("Authenticate to Decentralized Dropbox");
 
-  const logWalletToBackend = async (address) => {
-    await fetch("https://be08-2406-da1a-4c4-9b00-7e74-571-a8a3-3475.ngrok-free.app", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ address }),
-    });
-  };
+ const logWalletToBackend = async (address) => {
+  await fetch("http://localhost:4000/api/uploads", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ address }),
+  });
+};
     const connectWallet = async () => {
     if (!window.ethereum) {
       setError("MetaMask or wallet extension not found!");

@@ -36,3 +36,23 @@
     transform: rotate(360deg);
   }
 }
+html, body {
+  height: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+}
+
+.main-container {
+  min-height: 100vh;
+  height: auto;
+  /* Remove overflow: hidden if you ever set it! */
+}
+
+@media (max-width: 600px) {
+  .main-container {
+    min-height: 100vh;
+    height: auto;
+  }
+}

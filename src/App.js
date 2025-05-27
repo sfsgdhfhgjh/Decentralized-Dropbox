@@ -8,7 +8,7 @@ function App() {
   const [showAdmin, setShowAdmin] = useState(false); // <-- toggle state here
 
   return (
-    <div classname = "main-container">
+    <div className = "main-container">
       <h2>🦊 Decentralized Cloud</h2>
       <WalletLogin onLogin={setAccount} />
       {account && (
